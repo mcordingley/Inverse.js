@@ -1,7 +1,7 @@
 Inverse.js
 ==========
 
-A dead-simple JavaScript IoC container in 48 lines. Yes, you read that right: 48 lines. The primary purpose of an Inversion of Control container is to serve as a location to place application-specific code that creates objects. It's a registry of factories, effectively. The other JavaScript solutions to this problem complicate the matter unnecessarily with their own formats for registering factory methods and pages of documentation. Getting up and running with them is a project in itself. It shouldn't be this way.
+A dead-simple JavaScript IoC container in 50 lines. Yes, you read that right: 50 lines. The primary purpose of an Inversion of Control container is to serve as a location to place application-specific code that creates objects. It's a registry of factories, effectively. The other JavaScript solutions to this problem complicate the matter unnecessarily with their own formats for registering factory methods and pages of documentation. Getting up and running with them is a project in itself. It shouldn't be this way.
 
 ## API
 

@@ -1,8 +1,8 @@
 (function (root, factory) {
-    if (typeof define === 'function' && define.amd) define(['exports'], factory);
-    else if (typeof exports === 'object') factory(exports);
-    else factory(root.Inverse = {});
-})(this, function (exports) {
+    if (typeof define === 'function' && define.amd) define([], factory);
+    else if (typeof exports === 'object') module.exports = factory();
+    else root.Inverse = factory();
+})(this, function () {
     'use strict';
     
     var Inverse = function() {
@@ -45,4 +45,6 @@
     proto.register = function(name, object) {
         this._registeredObjects[name] = object;
     };
+    
+    return Inverse;
 });

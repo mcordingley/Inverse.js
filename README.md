@@ -53,7 +53,7 @@ You probably want to be all fancy and inject this as a dependency into your obje
 
 Suppose you're using some third-party web service, we'll call it ComplicAPI, that requires a few configuration options. Every time you need this connection to ComplicAPI, you'll need to grab the configuration settnigs for it and build it fresh. That means that the same block of code will exist in multiple places in your code base. That's not very dry! Instead, register that block of code into a singleton on your container:
 
-    container.singleton('complicapi-snowflake', function() {
+    container.singleton('complicapi-connection', function() {
         return new ComplicAPI.Connection('user-dude', {
             aync: true,
             apiVersion: 5,

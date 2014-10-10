@@ -38,3 +38,48 @@ If you have already created the object or have had it created for you by third-p
 With your factory functions in place, just call `make` to get your object:
 
     container.make(name);
+
+## Example
+
+To get started, we'll need an instance of the IoC container:
+
+    var container = new Inverse();
+
+Good! Now, we have a container that can be used to register new bindings into. Next, I'm going to be an awful person and put this variable into the global namespace. In my imaginary world, I'm in the browser, so I'll do it as follows:
+
+    window.container = container;
+
+You probably want to be all fancy and inject this as a dependency into your objects that use it, but whatever. 
+
+Suppose you're using some third-party web service, we'll call it ComplicAPI, that requires a few configuration options. Every time you need this connection to ComplicAPI, you'll need to grab the configuration settnigs for it and build it fresh. That means that the same block of code will exist in multiple places in your code base. That's not very dry! Instead, register that block of code into a singleton on your container:
+
+    container.singleton('complicapi-snowflake', function() {
+        return new ComplicAPI.Connection('user-dude', {
+            aync: true,
+            apiVersion: 5,
+            logLevel: 'info',
+            printMoogleToConsole: true
+        });
+    });
+
+Now, every place that you need an instance of the ComplicAPI connection, instead of going through that rigamorale, just get it from the container.
+
+    var connection = container.make('complicapi-connection');
+
+As a bonus, you're using the same connection everywhere and you're only creating the connection when it's needed. Neat! What about more complicated objects that shouldn't be unique? That's not much harder. ComplicAPI has some objects that you use in your code, but they all need a reference to the connection. Unlike the connection, though, each instance is a special, unique snowflake. OK, then. Let's set up the binding for that new object type.
+
+    container.bind('snowflake', function() {
+        return new ComplicAPI.Snowflake(container.make('complicapi-connection'));
+    });
+
+Now you can easily get all of the snowflakes that you want. You can have a ball with them!
+
+    container.bind('snowball', function() {
+        var flakes = [];
+        
+        for (var i = 0; i < 1000000; i++) {
+            flakes.push(container.make('snowflake'));
+        }
+        
+        return new ComplicAPI.Snowball(flakes);
+    });

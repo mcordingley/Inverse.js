@@ -69,7 +69,9 @@ Now, every place that you need an instance of the ComplicAPI connection, instead
 As a bonus, you're using the same connection everywhere and you're only creating the connection when it's needed. Neat! What about more complicated objects that shouldn't be unique? That's not much harder. ComplicAPI has some objects that you use in your code, but they all need a reference to the connection. Unlike the connection, though, each instance is a special, unique snowflake. OK, then. Let's set up the binding for that new object type.
 
     container.bind('snowflake', function() {
-        return new ComplicAPI.Snowflake(container.make('complicapi-connection'));
+        return new ComplicAPI.Snowflake(container.make('complicapi-connection'), {
+            radius: 5
+        });
     });
 
 Now you can easily get all of the snowflakes that you want. You can have a ball with them!

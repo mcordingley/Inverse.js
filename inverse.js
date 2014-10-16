@@ -19,8 +19,6 @@
         
         var args = Array.prototype.slice.call(arguments, 1);
         
-        args.unshift(this);
-        
         if (this._singletonCallbacks.hasOwnProperty(name)) {
             if (!this._instantiatedSingletons.hasOwnProperty(name)) {
                 this._instantiatedSingletons[name] = this._singletonCallbacks[name].apply(this, args);

@@ -12,37 +12,39 @@
         this._registeredObjects = {};
     };
     
-    var proto = Inverse.prototype;
-    
-    proto.make = function(name) {
+    Inverse.prototype.make = function(name) {
         if (this._registeredObjects.hasOwnProperty(name)) {
             return this._registeredObjects[name];
         }
         
+        var args = Array.prototype.slice.call(arguments, 1);
+        
+        args.unshift(this);
+        
         if (this._singletonCallbacks.hasOwnProperty(name)) {
             if (!this._instantiatedSingletons.hasOwnProperty(name)) {
-                this._instantiatedSingletons[name] = this._singletonCallbacks[name](this);
+                this._instantiatedSingletons[name] = this._singletonCallbacks[name].apply(this, args);
             }
             
             return this._instantiatedSingletons[name];
         }
         
         if (this._boundCallbacks.hasOwnProperty(name)) {
-            return this._boundCallbacks[name](this);
+            return this._boundCallbacks[name].apply(this, args);
         }
         
         return null;
     };
     
-    proto.bind = function(name, callback) {
+    Inverse.prototype.bind = function(name, callback) {
         this._boundCallbacks[name] = callback;
     };
     
-    proto.singleton = function(name, callback) {
+    Inverse.prototype.singleton = function(name, callback) {
         this._singletonCallbacks[name] = callback;
     };
     
-    proto.register = function(name, object) {
+    Inverse.prototype.register = function(name, object) {
         this._registeredObjects[name] = object;
     };
     

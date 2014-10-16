@@ -17,7 +17,7 @@ With your container in hand, you can register a factory function with the `bind`
 
     container.bind(name, callback);
     
-Just provide it with a name and the callback that you intend to use with it. When this callback is called, it will be provided the container instance as its first argument. This enables bound factory functions to then use the container to create their own dependencies.
+Just provide it with a name and the callback that you intend to use with it. When this callback is called, it will be provided the container instance as its `this` value. This enables bound factory functions to then use the container to create their own dependencies. The callback is then provided with any additional arguments that were given to `make`.
 
 ### singleton
 
@@ -35,7 +35,7 @@ If you have already created the object or have had it created for you by third-p
 
 ### make
 
-With your factory functions in place, just call `make` to get your object:
+With your factory functions in place, just call `make` to get your object. Any additional arguments beyong the key name of the binding are passed on to the constructor function.
 
     container.make(name);
 
@@ -68,9 +68,9 @@ Now, every place that you need an instance of the ComplicAPI connection, instead
 
 As a bonus, you're using the same connection everywhere and you're only creating the connection when it's needed. Neat! What about more complicated objects that shouldn't be unique? That's not much harder. ComplicAPI has some objects that you use in your code, but they all need a reference to the connection. Unlike the connection, though, each instance is a special, unique snowflake. OK, then. Let's set up the binding for that new object type.
 
-    container.bind('snowflake', function() {
+    container.bind('snowflake', function(radius) {
         return new ComplicAPI.Snowflake(container.make('complicapi-connection'), {
-            radius: 5
+            radius: radius
         });
     });
 
@@ -80,8 +80,14 @@ Now you can easily get all of the snowflakes that you want. You can have a ball 
         var flakes = [];
         
         for (var i = 0; i < 1000000; i++) {
-            flakes.push(container.make('snowflake'));
+            flakes.push(container.make('snowflake', Math.rand()));
         }
         
         return new ComplicAPI.Snowball(flakes);
     });
+
+## Change Log
+
+- 0.10.0
+  - Moved the container instance passed to callbacks from being their first argument to being their `this`.
+  - Passing along additional arguments to `make` on into the callbacks as their argument list.

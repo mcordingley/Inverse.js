@@ -88,6 +88,9 @@ Now you can easily get all of the snowflakes that you want. You can have a ball 
 
 ## Change Log
 
+- 1.0.0
+  - Marking stable with no changes.
+
 - 0.10.0
   - Moved the container instance passed to callbacks from being their first argument to being `this` for them.
   - Passing along additional arguments to `make` on into the callbacks as their argument list.

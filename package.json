@@ -2,6 +2,7 @@
     "name": "inverse",
     "license": "MIT",
     "description": "A dead-simple JavaScript IoC container. Easy to learn, easy to use.",
+    "keywords": ["container", "inversion", "ioc"],
     "author": "Michael Cordingley <Michael.Cordingley@gmail.com>",
     "version": "0.10.0",
     "main": "inverse.js",

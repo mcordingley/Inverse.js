@@ -35,7 +35,7 @@ If you have already created the object or have had it created for you by third-p
 
 ### make
 
-With your factory functions in place, just call `make` to get your object. Any additional arguments beyong the key name of the binding are passed on to the constructor function.
+With your factory functions in place, just call `make` to get your object. Any additional arguments beyond the key name of the binding are passed on to the constructor function.
 
     container.make(name);
 
